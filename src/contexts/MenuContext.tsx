@@ -387,7 +387,7 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const updateItem = async (item: MenuItem) => {
     try {
       const response = await fetch(
-        `https://hacker-pshor.netlify.app/api/menu/${item._id}`,
+        `https://backend-uiw0.onrender.com/api/menu/${item._id}`,
         {
           method: "PATCH", // ან PUT, გააჩნია როგორ გაწერ სერვერზე
           headers: { "Content-Type": "application/json" },
@@ -407,7 +407,7 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const incrementViews = async (id: string) => {
     try {
       // 1. ვუგზავნით მოთხოვნას სერვერს (Backend-ს)
-      await fetch(`https://hacker-pshor.netlify.app/api/menu/${id}/view`, {
+      await fetch(`https://backend-uiw0.onrender.com/api/menu/${id}/view`, {
         method: "POST",
       });
 
