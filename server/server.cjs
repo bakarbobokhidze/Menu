@@ -8,7 +8,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:8080",
   "https://hacker-pshorr777.page.gd",
-  "https://შენი-საიტი.netlify.app", // აქ ჩაწერ რასაც Netlify მოგცემს
+  "https://hacker-pshor.netlify.app", // აქ ჩაწერ რასაც Netlify მოგცემს
 ];
 
 app.use(
