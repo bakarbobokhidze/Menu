@@ -10,20 +10,26 @@ const allowedOrigins = [
   "https://hacker-pshor.netlify.app",
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // ნებას რთავს მოთხოვნებს origin-ის გარეშე (მაგ. Postman) ან allowedOrigins-დან
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  }),
-);
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       // ნებას რთავს მოთხოვნებს origin-ის გარეშე (მაგ. Postman) ან allowedOrigins-დან
+//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   }),
+// );
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.options('*', cors());
 app.use(express.json());
 
 // 1. დაკავშირება MongoDB-სთან
