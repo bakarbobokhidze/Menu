@@ -66,32 +66,29 @@ const Index = () => {
     <div className="min-h-screen bg-background pb-24">
       <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="mx-auto max-w-lg px-4">
-          <div className="flex items-center justify-between py-3">
-            <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl border bg-white p-1.5 shadow-sm">
+          <div className="flex items-center gap-2 group cursor-pointer">
+            {/* ლოგოს კონტეინერი - მომრგვალებული და მინიმალისტური */}
+            <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full border border-border/50 bg-secondary/20 flex items-center justify-center p-1 transition-all group-hover:border-primary/40 group-hover:bg-secondary/40">
               <img
-                src="https://www.hacker-pschorr-shop.de/media/7b/91/52/1724921658/HP_PrimaerLogo_RGB_pos.png?ts=1750923228" // <--- აქ ჩაწერე შენი ლოგოს ფაილის ზუსტი სახელი public საქაღალდიდან
-                alt="Logo"
-                className="h-full w-full object-contain" // object-contain ინარჩუნებს პროპორციებს
+                src="https://www.hacker-pschorr-shop.de/media/7b/91/52/1724921658/HP_PrimaerLogo_RGB_pos.png?ts=1750923228" // <--- აქ ჩასვი URL (უკეთესია გამჭვირვალე PNG ან SVG)
+                alt="Hacker Pschorr Logo"
+                className="h-full w-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                onError={(e) => {
+                  e.currentTarget.src = "https://placehold.co/100x100?text=H";
+                }}
               />
             </div>
 
-            {/* ტექსტის ნაწილი (შენი ორიგინალი კოდი) */}
-            <div>
-              <h1 className="font-display text-xl font-bold text-foreground leading-tight">
+            {/* ტექსტის ნაწილი - უფრო ახლოს და კომპაქტურად */}
+            <div className="flex flex-col justify-center -space-y-0.5">
+              {" "}
+              {/* -space-y-0.5 აახლოებს ხაზებს */}
+              <h1 className="font-display text-base font-black leading-none tracking-tight text-foreground/90 group-hover:text-primary transition-colors">
                 Hacker
               </h1>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground -mt-0.5">
+              <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground/80 font-bold opacity-80">
                 Pschorr
               </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <LanguageSwitcher />
-              <Link
-                to="/admin"
-                className="rounded-lg p-2 text-muted-foreground transition-colors hover:text-foreground hover:bg-secondary"
-              >
-                <Settings size={18} />
-              </Link>
             </div>
           </div>
           <div className="pb-3">
