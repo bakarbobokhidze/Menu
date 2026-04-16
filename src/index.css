@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 6% 4%;
+    --foreground: 40 10% 92%;
+
+    --card: 240 5% 8%;
+    --card-foreground: 40 10% 92%;
+
+    --popover: 240 5% 10%;
+    --popover-foreground: 40 10% 92%;
+
+    --primary: 40 52% 58%;
+    --primary-foreground: 240 6% 4%;
+
+    --secondary: 240 4% 14%;
+    --secondary-foreground: 40 10% 85%;
+
+    --muted: 240 4% 16%;
+    --muted-foreground: 40 5% 55%;
+
+    --accent: 40 52% 58%;
+    --accent-foreground: 240 6% 4%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 4% 18%;
+    --input: 240 4% 18%;
+    --ring: 40 52% 58%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 240 5% 6%;
+    --sidebar-foreground: 40 10% 92%;
+    --sidebar-primary: 40 52% 58%;
+    --sidebar-primary-foreground: 240 6% 4%;
+    --sidebar-accent: 240 4% 14%;
+    --sidebar-accent-foreground: 40 10% 85%;
+    --sidebar-border: 240 4% 18%;
+    --sidebar-ring: 40 52% 58%;
+
+    --gold: 40 52% 58%;
+    --gold-light: 40 60% 70%;
+    --gold-dark: 40 45% 42%;
+    --surface: 240 5% 8%;
+    --surface-elevated: 240 4% 12%;
+    --badge-chef: 40 52% 58%;
+    --badge-spicy: 0 72% 51%;
+    --badge-vegan: 142 50% 45%;
+    --out-of-stock: 240 4% 25%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+
+  .bg-gold {
+    background-color: hsl(var(--gold));
+  }
+
+  .border-gold {
+    border-color: hsl(var(--gold));
+  }
+}
