@@ -8,6 +8,7 @@ import SearchBar from "@/components/SearchBar";
 import ItemDetailModal from "@/components/ItemDetailModal";
 import { Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   // 1. გამოიყენე კონტექსტიდან წამოღებული ფუნქციები
@@ -66,45 +67,26 @@ const Index = () => {
     <div className="min-h-screen bg-background pb-24">
       <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="mx-auto max-w-lg px-4">
-          <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur shrink-0">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4">
-              {/* მარცხენა მხარე: ლოგო და სახელი */}
-              <div className="flex items-center gap-3 group cursor-pointer">
-                {/* ლოგო - გავზარდეთ ზომა (h-12 w-12) და მოვაშორეთ ზედმეტი ჩარჩოები */}
-                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-white/5 flex items-center justify-center p-1 transition-transform group-hover:scale-105">
-                  <img
-                    src="/your-logo-name.png" // <--- აქ ჩაწერე შენი ფაილის სახელი (მაგ: /logo.png)
-                    alt="Logo"
-                    className="h-full w-full object-contain"
-                  />
-                </div>
-
-                {/* ტექსტი - ზომა გაზრდილია და დაშორება გასწორებული */}
-                <div className="flex flex-col justify-center">
-                  <h1 className="font-display text-xl font-black leading-none tracking-tighter text-foreground uppercase">
-                    Hacker
-                  </h1>
-                  <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold mt-1">
-                    Pschorr
-                  </p>
-                </div>
-              </div>
-
-              {/* მარჯვენა მხარე: აქ უნდა იყოს შენი ადმინის ღილაკი */}
-              <div className="flex items-center gap-4">
-                {/* თუ აქამდე გქონდა Link ან Button ადმინისთვის, დარწმუნდი რომ აქ ზის */}
-                <Link to="/admin">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="font-bold uppercase tracking-wider text-[11px]"
-                  >
-                    Admin Panel
-                  </Button>
-                </Link>
-              </div>
+          <div className="flex items-center gap-3">
+            {/* მომრგვალებული ლოგო */}
+            <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-border bg-white p-1">
+              <img
+                src="/your-logo-name.png" // აქ შენი ფოტოს სახელი ჩაწერე
+                alt="Logo"
+                className="h-full w-full object-contain rounded-full"
+              />
             </div>
-          </nav>
+
+            {/* შენი ძველი ტექსტის სტილი */}
+            <div>
+              <h1 className="font-display text-xl font-bold text-foreground">
+                Hacker
+              </h1>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                Pschorr
+              </p>
+            </div>
+          </div>
           <div className="pb-3">
             <SearchBar value={search} onChange={setSearch} />
           </div>
