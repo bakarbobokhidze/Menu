@@ -8,6 +8,7 @@ import SearchBar from "@/components/SearchBar";
 import ItemDetailModal from "@/components/ItemDetailModal";
 import { Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import "../../src/index.css";
 
 const Index = () => {
   const { incrementViews } = useMenu();
