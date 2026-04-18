@@ -160,7 +160,6 @@ const Index = () => {
             </div>
           ))}
         </div>
-        „
         {sorted.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
             <p className="text-sm font-medium">No items found</p>
