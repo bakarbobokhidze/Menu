@@ -22,7 +22,7 @@ const Index = () => {
   const [visible, setVisible] = useState(false); // კერძების fade-in-ისთვის
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/menu")
+    fetch("https://backend-uiw0.onrender.com/api/menu")
       .then((res) => res.json())
       .then((data) => {
         setMenuItems(data);
@@ -159,7 +159,8 @@ const Index = () => {
               <MenuCard item={item} onView={() => handleItemTap(item)} />
             </div>
           ))}
-        </div>„
+        </div>
+        „
         {sorted.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
             <p className="text-sm font-medium">No items found</p>

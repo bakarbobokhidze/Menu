@@ -469,7 +469,7 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const addItem = async (item: MenuItem) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/menu",
+        "https://backend-uiw0.onrender.com",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -488,7 +488,7 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const updateItem = async (item: MenuItem) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/menu/${item._id}`,
+        `https://backend-uiw0.onrender.com/api/menu/${item._id}`,
         {
           method: "PATCH", // ან PUT, გააჩნია როგორ გაწერ სერვერზე
           headers: { "Content-Type": "application/json" },
@@ -508,7 +508,7 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const incrementViews = async (id: string) => {
     try {
       // 1. ვუგზავნით მოთხოვნას სერვერს (Backend-ს)
-      await fetch(`http://localhost:5000/api/menu/${id}/view`, {
+      await fetch(`https://backend-uiw0.onrender.com/api/menu/${id}/view`, {
         method: "POST",
       });
 
