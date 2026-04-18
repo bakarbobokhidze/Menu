@@ -16,7 +16,8 @@ export type Allergen =
   | "soy"
   | "shellfish"
   | "fish"
-  | "celery";
+  | "celery"
+  | string;
 
 export interface PortionSize {
   label: { en: string; ge: string; de: string; ru: string };
