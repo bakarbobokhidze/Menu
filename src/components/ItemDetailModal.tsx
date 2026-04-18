@@ -210,44 +210,42 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
 
             {/* Allergens - დავამატეთ ?. */}
             <div>
-              {item.allergens?.length > 0 ? (
-                <>
-                  <div className="mb-2.5 flex items-center gap-2">
-                    <AlertTriangle
-                      size={14}
-                      className="text-[hsl(40,80%,55%)]"
-                    />
-                    <h3 className="text-sm font-semibold text-foreground">
-                      {t("allergens")}
-                    </h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {item.allergens.map((allergen) => {
-                      const info = allergenLabels[allergen];
-                      if (!info) return null;
-                      return (
-                        <span
-                          key={allergen}
-                          className="flex items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-foreground"
-                        >
-                          <span>{info.emoji}</span>
-                          {info[language]}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </>
-              ) : (
-                /* No Allergens - ეს გამოჩნდება თუ allergens არის ცარიელი ან undefined */
-                <div className="flex items-center gap-2 rounded-lg bg-[hsl(142,50%,45%)]/10 px-4 py-3">
-                  <span className="text-sm">✅</span>
-                  <p className="text-xs font-medium text-[hsl(142,50%,45%)]">
-                    {t("noAllergens")}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+  {item.allergens && item.allergens.length > 0 ? (
+    <>
+      <div className="mb-2.5 flex items-center gap-2">
+        <AlertTriangle size={14} className="text-[hsl(40,80%,55%)]" />
+        <h3 className="text-sm font-semibold text-foreground">
+          {t("allergens")}
+        </h3>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {item.allergens.map((allergen) => {
+          const info = allergenLabels[allergen as keyof typeof allergenLabels];
+
+          return (
+            <span
+              key={allergen}
+              className="flex items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-foreground"
+            >
+              {/* თუ ობიექტში მოიძებნა ემოჯი გამოაჩინე, თუ არა - ⚠️ */}
+              <span>{info ? info.emoji : "⚠️"}</span>
+              {/* თუ ობიექტში მოიძებნა თარგმანი - გამოაჩინე, თუ არა - პირდაპირ ის სტრინგი რაც ბაზაშია */}
+              {info ? info[language] : allergen}
+            </span>
+          );
+        })}
+      </div>
+    </>
+  ) : (
+    <div className="flex items-center gap-2 rounded-lg bg-[hsl(142,50%,45%)]/10 px-4 py-3">
+      <span className="text-sm">✅</span>
+      <p className="text-xs font-medium text-[hsl(142,50%,45%)]">
+        {t("noAllergens")}
+      </p>
+    </div>
+  )}
+</div>
+
         </div>
       </div>
     </div>
