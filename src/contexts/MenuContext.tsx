@@ -26,7 +26,7 @@ export interface MenuItem {
   badges: Badge[];
   inStock: boolean;
   views: number;
-  allergens: Allergen[];
+  allergens: string[];
   portions: PortionSize[];
   calories?: number;
   prepTime?: string;
