@@ -751,6 +751,7 @@ const ItemForm = ({ item, categories, onSave, onCancel, onDelete }: any) => {
                     size={12}
                     className="cursor-pointer hover:text-destructive"
                     onClick={() =>
+                      console.log("allergens:", JSON.stringify(form.allergens));
                       setForm({
                         ...form,
                         allergens: form.allergens.filter((a) => a !== alg),
@@ -957,23 +958,23 @@ const CATEGORY_ICONS: {
   { value: "BookOpen", label: "მენიუ", Icon: BookOpen },
   { value: "ChefHat", label: "ძირითადი კერძები", Icon: ChefHat },
   { value: "Wheat", label: "ცომეული", Icon: Wheat },
-  { value: "Khinkali", label: "ხინკალი", Icon: KhinkaliIcon },
+  { value: "KhinkaliIcon", label: "ხინკალი", Icon: KhinkaliIcon },
   { value: "Pizza", label: "პიცა-პასტა", Icon: Pizza },
   { value: "Salad", label: "სალათები", Icon: Salad },
   { value: "Soup", label: "წვნიანები", Icon: Soup },
-  { value: "Cake", label: "დესერტი", Icon: CakeSlice },
+  { value: "CakeSlice", label: "დესერტი", Icon: CakeSlice },
   { value: "Coffee", label: "ყავა-ჩაი", Icon: Coffee },
   { value: "GlassWater", label: "სასმელები", Icon: GlassWater },
   { value: "CupSoda", label: "უალკოჰოლო", Icon: CupSoda },
   { value: "Beer", label: "ლუდი", Icon: Beer },
   { value: "Flame", label: "არაყი-ვისკი", Icon: Flame },
-  { value: "GlassWater", label: "კოქტეილი", Icon: Martini },
+  { value: "Martini", label: "კოქტეილი", Icon: Martini },
   { value: "Wine", label: "ღვინო", Icon: Wine },
   { value: "Fish", label: "თევზი", Icon: Fish },
   { value: "Utensils", label: "მთავარი", Icon: Utensils },
-  { value: "Beef", label: "კერძი", Icon: CookingPot },
+  { value: "CookingPot", label: "კერძი", Icon: CookingPot },
   { value: "Grape", label: "ხილი", Icon: Grape },
-  { value: "torus", label: "სოუსები", Icon: Torus },
+  { value: "Torus", label: "სოუსები", Icon: Torus },
 ];
 
 const CategoryForm = ({ category, onSave, onCancel }: any) => {
