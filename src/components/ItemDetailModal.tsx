@@ -200,7 +200,9 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
                         className="flex items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-foreground"
                       >
                         <span>⚠️</span>
-                        {allergen}
+                        {typeof allergen === 'string' 
+                          ? allergen 
+                          : (allergen.ge || allergen.en || JSON.stringify(allergen))}
                       </span>
                     ))}
                   </div>
