@@ -60,7 +60,6 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
         onClick={(e) => e.stopPropagation()}
         className="relative z-10 w-full max-w-lg overflow-hidden rounded-t-2xl border border-border bg-card shadow-2xl sm:rounded-2xl sm:mx-4 animate-fade-in max-h-[90vh] flex flex-col"
       >
-        {/* Image Header */}
         <div className="relative aspect-[16/9] shrink-0 overflow-hidden bg-secondary">
           {item.image ? (
             <img
@@ -111,7 +110,6 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
           )}
         </div>
 
-        {/* Content */}
         <div className="flex-1 overflow-y-auto">
           <div className="p-5 space-y-5">
             <div>
@@ -216,7 +214,6 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
                 </div>
               )}
             </div>
-
           </div>
         </div>
       </div>
