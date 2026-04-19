@@ -246,6 +246,30 @@ const Admin = () => {
     }
   };
 
+  const handleQuickPriceUpdate = async (item: MenuItem, newPrice: number) => {
+    // 1. ვამზადებთ მონაცემს
+    const updatedItem = { ...item, price: newPrice };
+  
+    try {
+      // 2. პირდაპირ სერვერზე გაგზავნა (PATCH)
+      const response = await fetch(`https://backend-uiw0.onrender.com/api/menu/${item._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedItem),
+      });
+  
+      if (response.ok) {
+        const saved = await response.json();
+        // 3. მხოლოდ State-ის განახლება, ფორმების შეხების გარეშე
+        setDbItems((prev) =>
+          prev.map((i) => (i._id === item._id ? saved : i))
+        );
+      }
+    } catch (error) {
+      console.error("Quick price update failed:", error);
+    }
+  };
+
   const executeDelete = async (id: string) => {
     try {
       const response = await fetch(
@@ -356,9 +380,7 @@ const Admin = () => {
               setItemToDelete(dbItems.find((i) => i._id === id) || null)
             }
             onToggleStock={handleToggleStock}
-            onPriceUpdate={(item: MenuItem, price: number) =>
-              handleSaveItem({ ...item, price })
-            }
+            onPriceUpdate={handleQuickPriceUpdate}
             showForm={showItemForm}
             editingItem={editingItem}
             onSave={handleSaveItem}
