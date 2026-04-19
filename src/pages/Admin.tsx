@@ -558,13 +558,16 @@ const ItemForm = ({ item, categories, onSave, onCancel, onDelete }: any) => {
 
   const handleAddAllergen = () => {
     const trimmed = newAllergen?.trim();
-    if (trimmed && !form.allergens?.includes(trimmed as any)) {
-      setForm({
-        ...form,
-        allergens: [...(form.allergens || []), trimmed as any],
-      });
-      setNewAllergen("");
-    }
+    if (!trimmed) return;
+    
+    setForm((prev) => {
+      if (prev.allergens?.includes(trimmed as any)) return prev;
+      return {
+        ...prev,
+        allergens: [...(prev.allergens || []), trimmed as any],
+      };
+    });
+    setNewAllergen("");
   };
 
   const isFormInvalid = !form?.name?.ge?.trim() || !form?.name?.en?.trim();
@@ -751,7 +754,6 @@ const ItemForm = ({ item, categories, onSave, onCancel, onDelete }: any) => {
                     size={12}
                     className="cursor-pointer hover:text-destructive"
                     onClick={() => {
-                      console.log("allergens:", JSON.stringify(form.allergens));
                       setForm({
                         ...form,
                         allergens: form.allergens.filter((a) => a !== alg),
