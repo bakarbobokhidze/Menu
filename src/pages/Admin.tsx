@@ -193,40 +193,55 @@ const Admin = () => {
   }, [authenticated]);
 
   const handleSaveItem = async (itemData: MenuItem) => {
-    console.log("RAW JSON:", JSON.stringify(itemData));
-    // ვალიდაცია
-    if (!itemData.name?.ge?.trim() || !itemData.name?.en?.trim()) {
+    // 1. მონაცემების მომზადება (სუფთა ობიექტის შექმნა)
+    // თუ ID იწყება "item_"-ით, საერთოდ ვაშორებთ მას, რომ ბაზამ ახალი შექმნას
+    const isNew = !itemData._id || itemData._id.startsWith("item_");
+    
+    const payload = { ...itemData };
+    if (isNew) {
+      delete payload._id; // ახალი კერძის შემთხვევაში ვაშლით დროებით ID-ს
+    }
+  
+    // 2. ვალიდაცია
+    if (!payload.name?.ge?.trim() || !payload.name?.en?.trim()) {
       toast.error("შეიყვანეთ სახელი ქართულად და ინგლისურად");
       return;
     }
-
+  
     try {
-      const isEditing = itemData._id && !itemData._id.startsWith("item_");
-      const url = isEditing
-        ? `https://backend-uiw0.onrender.com/api/menu/${itemData._id}`
+      const url = !isNew
+        ? `https://backend-uiw0.onrender.com/api/menu/${payload._id}`
         : "https://backend-uiw0.onrender.com/api/menu";
-
+  
       const response = await fetch(url, {
-        method: isEditing ? "PATCH" : "POST",
+        method: !isNew ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(itemData),
+        body: JSON.stringify(payload),
       });
-
+  
       if (response.ok) {
         const saved = await response.json();
-        if (isEditing) {
+        
+        if (!isNew) {
+          // რედაქტირება: ვპოულობთ ძველს და ვანაცვლებთ ზუსტად იმავე ადგილას
           setDbItems((prev) =>
-            prev.map((i) => (i._id === saved._id ? saved : i)),
+            prev.map((i) => (i._id === saved._id ? saved : i))
           );
-          toast.success("განახლდა");
+          toast.success("განახლდა წარმატებით");
         } else {
+          // დამატება: უბრალოდ ვამატებთ მასივის ბოლოში
           setDbItems((prev) => [...prev, saved]);
-          toast.success("დაემატა");
+          toast.success("დაემატა წარმატებით");
         }
+  
         setShowItemForm(false);
         setEditingItem(null);
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || "სერვერმა მოთხოვნა არ მიიღო");
       }
     } catch (error) {
+      console.error("Save error:", error);
       toast.error("შეცდომა შენახვისას");
     }
   };
@@ -529,7 +544,6 @@ const ItemForm = ({ item, categories, onSave, onCancel, onDelete }: any) => {
   const [form, setForm] = useState<MenuItem>(() => {
     if (item) return item;
     return {
-      _id: `item_${Date.now()}`, // აუცილებელია ახალი კერძისთვის
       categoryId: categories[0]?.id || "",
       name: { en: "", ge: "", de: "", ru: "" },
       description: { en: "", ge: "", de: "", ru: "" },
