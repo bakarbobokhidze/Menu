@@ -1,6 +1,7 @@
 import { MenuItem, Badge } from "@/contexts/MenuContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMenu } from "@/contexts/MenuContext";
+import React from "react"; 
 import {
   Star,
   Flame,
@@ -151,7 +152,7 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
               {getTranslated(item.description)}
             </p>
 
-            {item.portions?.length > 0 && (
+            {item.portions && item.portions.length > 0 && (
               <div>
                 <div className="mb-2.5 flex items-center gap-2">
                   <Scale size={14} className="text-primary" />
@@ -185,7 +186,7 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
             )}
 
             <div>
-              {item.allergens?.length > 0 ? (
+              {item.allergens && item.allergens.length > 0 ? (
                 <>
                   <div className="mb-2.5 flex items-center gap-2">
                     <AlertTriangle size={14} className="text-[hsl(40,80%,55%)]" />
@@ -195,7 +196,6 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {item.allergens.map((allergen, idx) => (
-                      console.log(`Allergen at index ${idx}:`, allergen);
                       <span
                         key={idx}
                         className="flex items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-red-500"
