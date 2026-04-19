@@ -13,7 +13,7 @@ import {
   Scale,
 } from "lucide-react";
 
-const badgeConfig: Record
+const badgeConfig: Record<
   Badge,
   { icon: React.ElementType; colorClass: string; key: string }
 > = {
