@@ -1,4 +1,4 @@
-import { MenuItem, Badge, Allergen } from "@/contexts/MenuContext";
+import { MenuItem, Badge } from "@/contexts/MenuContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMenu } from "@/contexts/MenuContext";
 import {
@@ -13,7 +13,7 @@ import {
   Scale,
 } from "lucide-react";
 
-const badgeConfig: Record<
+const badgeConfig: Record
   Badge,
   { icon: React.ElementType; colorClass: string; key: string }
 > = {
@@ -39,33 +39,13 @@ const badgeConfig: Record<
   },
 };
 
-const allergenLabels: Record<
-  Allergen,
-  { en: string; ge: string; de: string; emoji: string; ru: string }
-> = {
-  gluten: { en: "Gluten", ge: "გლუტენი", de: "Gluten", emoji: "🌾", ru: "глютен" },
-  dairy: { en: "Dairy", ge: "რძის პროდუქტი", de: "Milch", emoji: "🥛", ru: "молочный продукт" },
-  nuts: { en: "Nuts", ge: "თხილეული", de: "Nüsse", emoji: "🥜", ru: "Орехи" },
-  eggs: { en: "Eggs", ge: "კვერცხი", de: "Eier", emoji: "🥚", ru: "яйцо" },
-  soy: { en: "Soy", ge: "სოია", de: "Soja", emoji: "🫘", ru: "соя" },
-  shellfish: {
-    en: "Shellfish",
-    ge: "ზღვის პროდუქტი",
-    de: "Schalentiere",
-    ru: "",
-    emoji: "🦐",
-  },
-  fish: { en: "Fish", ge: "თევზი", de: "Fisch", emoji: "🐟", ru: "рыба" },
-  celery: { en: "Celery", ge: "ნიახური", de: "Sellerie", emoji: "🥬", ru: "Сельдерей" },
-};
-
 interface ItemDetailModalProps {
   item: MenuItem;
   onClose: () => void;
 }
 
 const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
-  const { t, getTranslated, language } = useLanguage();
+  const { t, getTranslated } = useLanguage();
   const { categories } = useMenu();
   const category = categories.find((c) => c.id === item.categoryId);
 
@@ -103,12 +83,11 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
             <X size={18} />
           </button>
 
-          {/* Badges - დავამატეთ ?. */}
           {item.badges && item.badges?.length > 0 && (
             <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
               {item.badges.map((badge) => {
                 const config = badgeConfig[badge];
-                if (!config) return null; // უსაფრთხოებისთვის
+                if (!config) return null;
                 const Icon = config.icon;
                 return (
                   <span
@@ -174,7 +153,6 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
               {getTranslated(item.description)}
             </p>
 
-            {/* Portions - დავამატეთ ?. */}
             {item.portions?.length > 0 && (
               <div>
                 <div className="mb-2.5 flex items-center gap-2">
@@ -208,44 +186,38 @@ const ItemDetailModal = ({ item, onClose }: ItemDetailModalProps) => {
               </div>
             )}
 
-            {/* Allergens - დავამატეთ ?. */}
             <div>
-  {item.allergens && item.allergens.length > 0 ? (
-    <>
-      <div className="mb-2.5 flex items-center gap-2">
-        <AlertTriangle size={14} className="text-[hsl(40,80%,55%)]" />
-        <h3 className="text-sm font-semibold text-foreground">
-          {t("allergens")}
-        </h3>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {item.allergens.map((allergen) => {
-          const info = allergenLabels[allergen as keyof typeof allergenLabels];
+              {item.allergens?.length > 0 ? (
+                <>
+                  <div className="mb-2.5 flex items-center gap-2">
+                    <AlertTriangle size={14} className="text-[hsl(40,80%,55%)]" />
+                    <h3 className="text-sm font-semibold text-foreground">
+                      {t("allergens")}
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {item.allergens.map((allergen, idx) => (
+                      <span
+                        key={idx}
+                        className="flex items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-foreground"
+                      >
+                        <span>⚠️</span>
+                        {allergen}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="flex items-center gap-2 rounded-lg bg-[hsl(142,50%,45%)]/10 px-4 py-3">
+                  <span className="text-sm">✅</span>
+                  <p className="text-xs font-medium text-[hsl(142,50%,45%)]">
+                    {t("noAllergens")}
+                  </p>
+                </div>
+              )}
+            </div>
 
-          return (
-            <span
-              key={allergen}
-              className="flex items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-foreground"
-            >
-              {/* თუ ობიექტში მოიძებნა ემოჯი გამოაჩინე, თუ არა - ⚠️ */}
-              <span>{info ? info.emoji : "⚠️"}</span>
-              {/* თუ ობიექტში მოიძებნა თარგმანი - გამოაჩინე, თუ არა - პირდაპირ ის სტრინგი რაც ბაზაშია */}
-              {info ? info[language] : allergen}
-            </span>
-          );
-        })}
-      </div>
-    </>
-  ) : (
-    <div className="flex items-center gap-2 rounded-lg bg-[hsl(142,50%,45%)]/10 px-4 py-3">
-      <span className="text-sm">✅</span>
-      <p className="text-xs font-medium text-[hsl(142,50%,45%)]">
-        {t("noAllergens")}
-      </p>
-    </div>
-  )}
-</div>
-
+          </div>
         </div>
       </div>
     </div>
