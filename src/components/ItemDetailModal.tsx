@@ -1,4 +1,4 @@
-import { MenuItem, Badge } from "@/contexts/MenuContext";
+import { MenuItem } from "@/contexts/MenuContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMenu } from "@/contexts/MenuContext";
 import React from "react"; 
@@ -14,10 +14,7 @@ import {
   Scale,
 } from "lucide-react";
 
-const badgeConfig: Record<
-  Badge,
-  { icon: React.ElementType; colorClass: string; key: string }
-> = {
+const badgeConfig: any = {
   chef: {
     icon: Star,
     colorClass: "bg-[hsl(40,52%,58%)] text-[hsl(240,6%,4%)]",
@@ -37,7 +34,7 @@ const badgeConfig: Record<
     icon: Sparkles,
     colorClass: "bg-[hsl(200,80%,50%)] text-[hsl(0,0%,100%)]",
     key: "newItem",
-  },
+  }
 };
 
 interface ItemDetailModalProps {
