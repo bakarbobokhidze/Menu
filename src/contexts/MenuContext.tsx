@@ -16,6 +16,13 @@ export interface PortionSize {
   weight?: string;
 }
 
+export interface Allergen {
+  ge: string;
+  en: string;
+  de: string;
+  ru: string;
+}
+
 export interface MenuItem {
   _id?: string;
   categoryId: string;
@@ -26,7 +33,7 @@ export interface MenuItem {
   badges: Badge[];
   inStock: boolean;
   views: number;
-  allergens: string[];
+  allergens: Allergen[];
   portions: PortionSize[];
   calories?: number;
   prepTime?: string;
