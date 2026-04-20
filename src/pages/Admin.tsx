@@ -776,13 +776,14 @@ const ItemForm = ({ item, categories, onSave, onCancel, onDelete }: any) => {
             >
               <Plus size={14} className="mr-1" /> დამატება
             </Button>
-            <div className="flex flex-wrap gap-2">
-              {form.allergens?.map((alg, idx) => (
-                <span
-                  key={idx}
-                  className="flex items-center gap-1.5 bg-secondary px-2.5 py-1 rounded-md text-[11px] font-medium border border-border"
-                >
-                  {alg.ge}
+           <div className="flex flex-wrap gap-2">
+            {form.allergens?.map((alg, idx) => (
+              <span
+                key={idx}
+                className="flex flex-col items-start bg-secondary px-2.5 py-1 rounded-md text-[11px] font-medium border border-border"
+              >
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className="text-primary font-bold">GE: {alg.ge}</span>
                   <X
                     size={12}
                     className="cursor-pointer hover:text-destructive"
@@ -793,9 +794,12 @@ const ItemForm = ({ item, categories, onSave, onCancel, onDelete }: any) => {
                       })
                     }
                   />
-                </span>
-              ))}
-            </div>
+                </div>
+                {/* დაამატე ესენი, რომ შეამოწმო Frontend-ზე თუ შემოდის მონაცემი */}
+                <span className="opacity-70 text-[9px]">EN: {alg.en} | DE: {alg.de} | RU: {alg.ru}</span>
+              </span>
+            ))}
+          </div>
           </div>
           {/* 5. PORTIONS */}
           <div className="space-y-4 pt-4 border-t border-dashed">
