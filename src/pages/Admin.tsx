@@ -921,6 +921,8 @@ const ItemForm = ({ item, categories, onSave, onCancel, onDelete }: any) => {
               </div>
             ))}
           </div>
+        </div>
+      </div>
 
       {/* FIXED FOOTER */}
       <div className="p-4 border-t bg-card shrink-0">
