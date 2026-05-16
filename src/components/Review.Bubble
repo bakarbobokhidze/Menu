@@ -1,0 +1,150 @@
+import React, { useState, useEffect } from "react";
+import { MessageSquare, X, Send, CheckCircle2 } from "lucide-react";
+
+const ReviewBubble = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  // წარმატებით გაგზავნის შემდეგ ფანჯრის ავტომატური დახურვა
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        setSuccess(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+
+    setLoading(true);
+    try {
+      const res = await fetch("https://backend-uiw0.onrender.com/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+
+      if (res.ok) {
+        setSuccess(true);
+        setText("");
+      }
+    } catch (err) {
+      console.error("Review error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 font-sans antialiased">
+      {/* მთავარი მცურავი ღილაკი (Floating Button) */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:scale-110 active:scale-95 group"
+          aria-label="დატოვე შეფასება"
+        >
+          <MessageSquare className="h-6 w-6 transition-transform group-hover:rotate-12" />
+        </button>
+      )}
+
+      {/* შეფასების ფანჯარა */}
+      {isOpen && (
+        <div className="w-[calc(100vw-32px)] max-w-[360px] overflow-hidden rounded-2xl border border-border/50 bg-background/95 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.15)] backdrop-blur-xl animate-in fade-in slide-in-from-bottom-6 duration-300">
+          {/* ჰედერი */}
+          <div className="flex items-center justify-between pb-3 border-b border-border/40">
+            <div>
+              <h3 className="font-semibold text-foreground text-base tracking-tight">
+                როგორ მოგეწონათ ჩვენი მენიუ?
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                თქვენი აზრი ჩვენთვის მნიშვნელოვანია
+              </p>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-1.5 rounded-xl hover:bg-secondary text-muted-foreground transition-colors"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          {/* კონტენტი */}
+          {success ? (
+            <div className="flex flex-col items-center justify-center py-8 text-center animate-in zoom-in-95 duration-300">
+              <div className="rounded-full bg-emerald-500/10 p-3 text-emerald-500 mb-3">
+                <CheckCircle2 className="h-8 w-8" />
+              </div>
+              <p className="text-sm font-medium text-foreground">
+                მადლობა შეფასებისთვის!
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                თქვენი აზრი წარმატებით გაიგზავნა.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="mt-4">
+              {/* ტექსტური არე */}
+              <div className="relative">
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="დაწერეთ თქვენი შთაბეჭდილება..."
+                  maxLength={400}
+                  rows={4}
+                  className="w-full resize-none rounded-xl border border-border bg-secondary/30 p-3.5 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all disabled:opacity-50"
+                  disabled={loading}
+                />
+                <span className="absolute bottom-2.5 right-3 text-[10px] font-medium text-muted-foreground/60">
+                  {text.length}/400
+                </span>
+              </div>
+
+              {/* სწრაფი ტექსტური თეგები (სურვილისამებრ, კლიკზე ტექსტს ამატებს) */}
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {["გემრიელია 😋", "სწრაფია ⚡", "კარგი სერვისია 👍"].map(
+                  (tag) => (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() =>
+                        setText((prev) => (prev ? `${prev} ${tag}` : tag))
+                      }
+                      className="text-[11px] font-medium px-2.5 py-1 rounded-lg border border-border bg-background hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
+                    >
+                      {tag}
+                    </button>
+                  ),
+                )}
+              </div>
+
+              {/* გაგზავნის ღილაკი */}
+              <button
+                type="submit"
+                disabled={loading || !text.trim()}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:opacity-95 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none"
+              >
+                {loading ? (
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                ) : (
+                  <>
+                    <span>გაგზავნა</span>
+                    <Send className="h-3.5 w-3.5" />
+                  </>
+                )}
+              </button>
+            </form>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ReviewBubble;
