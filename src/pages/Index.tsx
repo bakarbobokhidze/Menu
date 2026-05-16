@@ -9,7 +9,7 @@ import ItemDetailModal from "@/components/ItemDetailModal";
 import { Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import "../../src/index.css";
-import ReviewBubble from "@/components/Review.Bubble";
+import ReviewBubble from "@/components/ReviewBubble";
 
 const Index = () => {
   const { incrementViews } = useMenu();
